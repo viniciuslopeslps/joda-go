@@ -1,5 +1,7 @@
 package time
 
+import "fmt"
+
 type Time interface {
 	ToString() string
 	Sum(value Time) Time
@@ -13,7 +15,7 @@ type time struct {
 }
 
 func (t *time) ToString() string {
-	return ""
+	return fmt.Sprintf("%v:%v:%v", t.Hours, t.Minutes, t.Seconds)
 }
 
 func (t *time) Sum(value Time) Time {
