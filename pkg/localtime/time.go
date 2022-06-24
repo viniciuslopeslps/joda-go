@@ -1,4 +1,4 @@
-package time
+package localtime
 
 import (
 	"fmt"
@@ -13,31 +13,31 @@ type Time interface {
 	GetHours() int
 }
 
-type time struct {
+type Localtime struct {
 	Hours   int
 	Minutes int
 	Seconds int
 }
 
-func NewTime(hours, minutes, seconds int) Time {
+func NewLocalTime(hours, minutes, seconds int) Time {
 	fmt.Print("oi")
-	return &time{
+	return &Localtime{
 		Hours:   hours,
 		Minutes: minutes,
 		Seconds: seconds,
 	}
 }
 
-func (t *time) ToString() string {
+func (t *Localtime) ToString() string {
 	return fmt.Sprintf("%v:%v:%v", t.Hours, t.Minutes, t.Seconds)
 }
 
-func (t *time) Sum(value Time) Time {
+func (t *Localtime) Sum(value Time) Time {
 	newSeconds := t.Seconds + value.GetSeconds()
 	newMinutes := t.Minutes + value.GetMinutes()
 	newHours := t.Hours + value.GetSeconds()
 
-	newTime := &time{}
+	newTime := &Localtime{}
 	if newSeconds >= 60 {
 		newMinutes += newSeconds / 60
 		newTime.Seconds = newSeconds % 60
@@ -53,18 +53,18 @@ func (t *time) Sum(value Time) Time {
 	return newTime
 }
 
-func (t *time) Diff(a Time, b Time) Time {
-	return &time{}
+func (t *Localtime) Diff(a Time, b Time) Time {
+	return &Localtime{}
 }
 
-func (t *time) GetSeconds() int {
+func (t *Localtime) GetSeconds() int {
 	return t.Seconds
 }
 
-func (t *time) GetMinutes() int {
+func (t *Localtime) GetMinutes() int {
 	return t.Minutes
 }
 
-func (t *time) GetHours() int {
+func (t *Localtime) GetHours() int {
 	return t.Hours
 }
