@@ -19,6 +19,15 @@ type time struct {
 	Seconds int
 }
 
+func NewTime(hours, minutes, seconds int) Time {
+	fmt.Print("oi")
+	return &time{
+		Hours:   hours,
+		Minutes: minutes,
+		Seconds: seconds,
+	}
+}
+
 func (t *time) ToString() string {
 	return fmt.Sprintf("%v:%v:%v", t.Hours, t.Minutes, t.Seconds)
 }
