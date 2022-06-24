@@ -25,15 +25,23 @@ func (t *time) ToString() string {
 
 func (t *time) Sum(value Time) Time {
 	newSeconds := t.Seconds + value.GetSeconds()
-	if newSeconds >= 60 {
-		//min := int(newSeconds / 60)
-		difSec := newSeconds % 60
-		newSeconds = difSec
-	}
-	//newMinutes := t.Minutes + value.GetMinutes()
-	//newHours := t.Hours + value.GetSeconds()
+	newMinutes := t.Minutes + value.GetMinutes()
+	newHours := t.Hours + value.GetSeconds()
 
-	return &time{}
+	newTime := &time{}
+	if newSeconds >= 60 {
+		newMinutes += newSeconds / 60
+		newTime.Seconds = newSeconds % 60
+	}
+
+	if newMinutes >= 60 {
+		newHours += newMinutes / 60
+		newTime.Minutes = newMinutes % 60
+	}
+
+	newTime.Hours = newHours
+
+	return newTime
 }
 
 func (t *time) Diff(a Time, b Time) Time {
