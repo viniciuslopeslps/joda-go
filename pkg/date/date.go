@@ -1,5 +1,20 @@
 package date
 
+var calendar = map[int]int{
+	1:  31,
+	2:  28,
+	3:  31,
+	4:  30,
+	5:  31,
+	6:  30,
+	7:  31,
+	8:  31,
+	9:  30,
+	10: 31,
+	11: 30,
+	12: 31,
+}
+
 type Date interface {
 	ToString() string
 	Sum(value Date) Date
@@ -25,6 +40,13 @@ func NewDate(days, months, years int) Date {
 }
 
 func (d *date) Sum(value Date) Date {
+	days := d.GetDays() + value.GetDays()
+	upperBound := d.getMonthBound(d.GetMonths())
+
+	if days > upperBound {
+		diff := days - upperBound
+
+	}
 	return nil
 }
 
@@ -66,12 +88,10 @@ func (d *date) Diff(a Date, b Date) Date {
 	panic("implement me")
 }
 
-func (*date) getCalendar() map[int]int {
-	return map[int]int{
-		1: 31,
-		2: 28,
-		3: 31,
-		4: 30,
-		5: 31,
+func (d *date) getMonthBound(month int) int {
+	if month == 2 && d.IsLeapYear() {
+		return 29
 	}
+
+	return calendar[month]
 }
