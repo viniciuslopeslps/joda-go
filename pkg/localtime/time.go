@@ -2,6 +2,7 @@ package localtime
 
 import (
 	"fmt"
+	"math"
 )
 
 type Time interface {
@@ -66,20 +67,20 @@ func (t *Localtime) Diff(value Time) Time {
 	newTime := &Localtime{}
 
 	if newSeconds < 0 {
-		newMinutes += 1
-		newTime.Seconds = 60 - newSeconds
+		newMinutes -= 1
+		newTime.Seconds = newSeconds + 60
 	} else {
 		newTime.Seconds = newSeconds
 	}
 
 	if newMinutes < 0 {
-		newHours += 1
-		newTime.Minutes = 60 - newMinutes
+		newHours -= 1
+		newTime.Minutes = newMinutes + 60
 	} else {
 		newTime.Minutes = newMinutes
 	}
 
-	newTime.Hours = newHours
+	newTime.Hours = int(math.Abs(float64(newHours)))
 
 	return newTime
 }

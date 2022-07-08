@@ -43,6 +43,15 @@ func Test_Diff_1(t *testing.T) {
 }
 
 func Test_Diff_2(t *testing.T) {
+	testTime := NewLocalTime(13, 0, 2)
+	value := NewLocalTime(13, 0, 1)
+	expected := NewLocalTime(0, 0, 1)
+
+	res := testTime.Diff(value)
+	assert.Equal(t, expected, res)
+}
+
+func Test_Diff_3(t *testing.T) {
 	testTime := NewLocalTime(17, 0, 0)
 	value := NewLocalTime(13, 0, 0)
 	expected := NewLocalTime(4, 0, 0)
@@ -51,7 +60,7 @@ func Test_Diff_2(t *testing.T) {
 	assert.Equal(t, expected, res)
 }
 
-func Test_Diff_3(t *testing.T) {
+func Test_Diff_4(t *testing.T) {
 	testTime := NewLocalTime(13, 10, 0)
 	value := NewLocalTime(17, 15, 0)
 	expected := NewLocalTime(3, 55, 0)
@@ -60,10 +69,10 @@ func Test_Diff_3(t *testing.T) {
 	assert.Equal(t, expected, res)
 }
 
-func Test_Diff_4(t *testing.T) {
+func Test_Diff_5(t *testing.T) {
 	testTime := NewLocalTime(13, 10, 1)
 	value := NewLocalTime(17, 15, 10)
-	expected := NewLocalTime(3, 54, 0)
+	expected := NewLocalTime(3, 54, 51)
 
 	res := testTime.Diff(value)
 	assert.Equal(t, expected, res)
