@@ -63,12 +63,23 @@ func (t *Localtime) Diff(value Time) Time {
 	newSeconds := t.Seconds - value.GetSeconds()
 	newMinutes := t.Minutes - value.GetMinutes()
 	newHours := t.Hours - value.GetHours()
+	newTime := &Localtime{}
 
 	if newSeconds < 0 {
-		newMinutes -= 1
+		newMinutes += 1
+		newTime.Seconds = 60 - newSeconds
+	} else {
+		newTime.Seconds = newSeconds
 	}
 
-	newTime := &Localtime{}
+	if newMinutes < 0 {
+		newHours += 1
+		newTime.Minutes = 60 - newMinutes
+	} else {
+		newTime.Minutes = newMinutes
+	}
+
+	newTime.Hours = newHours
 
 	return newTime
 }
