@@ -7,7 +7,7 @@ import (
 type Time interface {
 	ToString() string
 	Sum(value Time) Time
-	Diff(a Time, b Time) Time
+	Diff(value Time) Time
 	GetSeconds() int
 	GetMinutes() int
 	GetHours() int
@@ -20,7 +20,10 @@ type Localtime struct {
 }
 
 func NewLocalTime(hours, minutes, seconds int) Time {
-	fmt.Print("oi")
+	if hours > 24 || minutes > 60 || seconds > 60 {
+		panic("This is an invalid local time")
+	}
+
 	return &Localtime{
 		Hours:   hours,
 		Minutes: minutes,
@@ -37,19 +40,18 @@ func (t *Localtime) Sum(value Time) Time {
 	newMinutes := t.Minutes + value.GetMinutes()
 	newHours := t.Hours + value.GetHours()
 
-	newTime := &Localtime{}
+	newTime := &Localtime{
+		Seconds: newSeconds,
+		Minutes: newMinutes,
+	}
 	if newSeconds >= 60 {
 		newMinutes += newSeconds / 60
 		newTime.Seconds = newSeconds % 60
-	} else {
-		newTime.Seconds = newSeconds
 	}
 
 	if newMinutes >= 60 {
 		newHours += newMinutes / 60
 		newTime.Minutes = newMinutes % 60
-	} else {
-		newTime.Minutes = newMinutes
 	}
 
 	newTime.Hours = newHours
@@ -57,8 +59,18 @@ func (t *Localtime) Sum(value Time) Time {
 	return newTime
 }
 
-func (t *Localtime) Diff(a Time, b Time) Time {
-	return &Localtime{}
+func (t *Localtime) Diff(value Time) Time {
+	newSeconds := t.Seconds - value.GetSeconds()
+	newMinutes := t.Minutes - value.GetMinutes()
+	newHours := t.Hours - value.GetHours()
+
+	if newSeconds < 0 {
+		newMinutes -= 1
+	}
+
+	newTime := &Localtime{}
+
+	return newTime
 }
 
 func (t *Localtime) GetSeconds() int {
