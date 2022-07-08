@@ -63,7 +63,8 @@ func (t *Localtime) Sum(value Time) Time {
 func (t *Localtime) Diff(value Time) Time {
 	newSeconds := t.Seconds - value.GetSeconds()
 	newMinutes := t.Minutes - value.GetMinutes()
-	newHours := t.Hours - value.GetHours()
+	newHours := int(math.Abs(float64(t.Hours - value.GetHours())))
+
 	newTime := &Localtime{}
 
 	if newSeconds < 0 {
