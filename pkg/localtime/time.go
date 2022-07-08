@@ -29,23 +29,27 @@ func NewLocalTime(hours, minutes, seconds int) Time {
 }
 
 func (t *Localtime) ToString() string {
-	return fmt.Sprintf("%v:%v:%v", t.Hours, t.Minutes, t.Seconds)
+	return fmt.Sprintf("%.2d:%.2d:%.2d", t.Hours, t.Minutes, t.Seconds)
 }
 
 func (t *Localtime) Sum(value Time) Time {
 	newSeconds := t.Seconds + value.GetSeconds()
 	newMinutes := t.Minutes + value.GetMinutes()
-	newHours := t.Hours + value.GetSeconds()
+	newHours := t.Hours + value.GetHours()
 
 	newTime := &Localtime{}
 	if newSeconds >= 60 {
 		newMinutes += newSeconds / 60
 		newTime.Seconds = newSeconds % 60
+	} else {
+		newTime.Seconds = newSeconds
 	}
 
 	if newMinutes >= 60 {
 		newHours += newMinutes / 60
 		newTime.Minutes = newMinutes % 60
+	} else {
+		newTime.Minutes = newMinutes
 	}
 
 	newTime.Hours = newHours
