@@ -1,5 +1,7 @@
 package date
 
+import "fmt"
+
 var calendar = map[int]int{
 	1:  31,
 	2:  28,
@@ -18,7 +20,6 @@ var calendar = map[int]int{
 type Date interface {
 	ToString() string
 	Sum(value Date) Date
-	Diff(a Date, b Date) Date
 	GetDays() int
 	GetMonths() int
 	GetYears() int
@@ -32,6 +33,9 @@ type date struct {
 }
 
 func NewDate(days, months, years int) Date {
+	if (days <= 0 || days > 31) || (months <= 0 || months > 12) || (years < 0) {
+		panic("invalid date!")
+	}
 	return &date{
 		days:   days,
 		months: months,
@@ -42,12 +46,25 @@ func NewDate(days, months, years int) Date {
 func (d *date) Sum(value Date) Date {
 	days := d.GetDays() + value.GetDays()
 	upperBound := d.getMonthBound(d.GetMonths())
+	months := d.GetMonths() + value.GetMonths()
+	years := d.GetYears() + value.GetYears()
 
 	if days > upperBound {
 		diff := days - upperBound
-
+		days = diff
+		months += int(diff / upperBound)
 	}
-	return nil
+
+	if months > 12 {
+		years += int(months / 12)
+		months = months % 12
+	}
+
+	return &date{
+		days:   days,
+		months: months,
+		years:  years,
+	}
 }
 
 func (d *date) IsLeapYear() bool {
@@ -79,13 +96,7 @@ func (d *date) GetYears() int {
 }
 
 func (d *date) ToString() string {
-	//TODO implement me
-	panic("implement me")
-}
-
-func (d *date) Diff(a Date, b Date) Date {
-	//TODO implement me
-	panic("implement me")
+	return fmt.Sprintf("%d/%d/%d", d.days, d.months, d.years)
 }
 
 func (d *date) getMonthBound(month int) int {

@@ -17,8 +17,8 @@ func Test_Sum(t *testing.T) {
 
 func Test_Sum_2(t *testing.T) {
 	testTime := NewLocalTime(1, 1, 1)
-	value := NewLocalTime(1, 121, 120)
-	expected := NewLocalTime(4, 4, 1)
+	value := NewLocalTime(1, 12, 60)
+	expected := NewLocalTime(2, 13, 1)
 
 	res := testTime.Sum(value)
 	assert.Equal(t, expected, res)
