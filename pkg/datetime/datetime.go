@@ -7,8 +7,8 @@ import (
 )
 
 type Datetime interface {
-	CropDate() interface{}
-	CropTime() interface{}
+	CropDate() localtime.Time
+	CropTime() date.Date
 	ToString() string
 }
 
@@ -21,11 +21,11 @@ func (d dateTime) ToString() string {
 	return fmt.Sprintf("%s %s", d.date.ToString(), d.time.ToString())
 }
 
-func (d dateTime) CropDate() interface{} {
+func (d dateTime) CropDate() localtime.Time {
 	return d.time
 }
 
-func (d dateTime) CropTime() interface{} {
+func (d dateTime) CropTime() date.Date {
 	return d.date
 }
 
