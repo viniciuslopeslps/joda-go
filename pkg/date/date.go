@@ -1,6 +1,8 @@
 package date
 
-import "fmt"
+import (
+	"fmt"
+)
 
 var calendar = map[int]int{
 	1:  31,
@@ -33,9 +35,10 @@ type date struct {
 }
 
 func NewDate(days, months, years int) Date {
-	if (days <= 0 || days > 31) || (months <= 0 || months > 12) || (years < 0) {
+	if (days <= 0 || days > 31) || (months < 0 || months > 12) || (years < 0) {
 		panic("invalid date!")
 	}
+
 	return &date{
 		days:   days,
 		months: months,
@@ -52,11 +55,11 @@ func (d *date) Sum(value Date) Date {
 	if days > upperBound {
 		diff := days - upperBound
 		days = diff
-		months += int(diff / upperBound)
+		months += diff % upperBound
 	}
 
 	if months > 12 {
-		years += int(months / 12)
+		years += months / 12
 		months = months % 12
 	}
 

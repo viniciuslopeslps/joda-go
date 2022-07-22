@@ -36,3 +36,16 @@ func TestSumDate_3(t *testing.T) {
 	assert.Equal(t, 30, summed.GetDays())
 	assert.Equal(t, 2, summed.GetMonths())
 }
+
+func TestSumDate_4(t *testing.T) {
+	original := NewDate(31, 7, 1964)
+	summed := original.Sum(NewDate(1, 0, 0))
+	assert.Equal(t, 1964, summed.GetYears())
+	assert.Equal(t, 1, summed.GetDays())
+	assert.Equal(t, 8, summed.GetMonths())
+}
+
+func TestToString(t *testing.T) {
+	original := NewDate(31, 12, 1964)
+	assert.Equal(t, "31/12/1964", original.ToString())
+}
