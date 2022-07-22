@@ -99,7 +99,7 @@ func (d *date) GetYears() int {
 }
 
 func (d *date) ToString() string {
-	return fmt.Sprintf("%d/%d/%d", d.days, d.months, d.years)
+	return fmt.Sprintf("%.2d/%.2d/%.4d", d.days, d.months, d.years)
 }
 
 func (d *date) getMonthBound(month int) int {

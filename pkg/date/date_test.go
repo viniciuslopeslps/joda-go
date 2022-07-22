@@ -1,8 +1,9 @@
 package date
 
 import (
-	"github.com/stretchr/testify/assert"
 	"testing"
+
+	"github.com/stretchr/testify/assert"
 )
 
 func TestIsLeapYear(t *testing.T) {
@@ -48,4 +49,9 @@ func TestSumDate_4(t *testing.T) {
 func TestToString(t *testing.T) {
 	original := NewDate(31, 12, 1964)
 	assert.Equal(t, "31/12/1964", original.ToString())
+}
+
+func TestToString_2(t *testing.T) {
+	original := NewDate(31, 1, 1964)
+	assert.Equal(t, "31/01/1964", original.ToString())
 }

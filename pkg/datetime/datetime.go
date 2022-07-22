@@ -1,12 +1,14 @@
 package datetime
 
 import (
+	"fmt"
 	"joda-go/pkg/date"
 	"joda-go/pkg/localtime"
 )
 
 type Datetime interface {
-	Crop() interface{}
+	CropDate() interface{}
+	CropTime() interface{}
 	ToString() string
 }
 
@@ -16,15 +18,20 @@ type dateTime struct {
 }
 
 func (d dateTime) ToString() string {
-	//TODO implement me
-	panic("implement me")
+	return fmt.Sprintf("%s %s", d.date.ToString(), d.time.ToString())
 }
 
-func (d dateTime) Crop() interface{} {
-	//TODO implement me
-	panic("implement me")
+func (d dateTime) CropDate() interface{} {
+	return d.time
+}
+
+func (d dateTime) CropTime() interface{} {
+	return d.date
 }
 
 func NewDateTime(day, month, year, hour, minute, second int) Datetime {
-	return &dateTime{}
+	return &dateTime{
+		date: date.NewDate(day, month, year),
+		time: localtime.NewLocalTime(hour, minute, second),
+	}
 }
